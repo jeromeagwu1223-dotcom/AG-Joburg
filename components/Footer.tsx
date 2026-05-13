@@ -61,7 +61,7 @@ export default function Footer() {
           </div>
           <div className="agk-footer__contact">
             <Icon name="mapPin" size={16} color="#FFFFFF" />
-            <span>95, 14th Ave, Northcliff</span>
+            <span>97, 14th Ave, Northcliff</span>
           </div>
           <div className="agk-footer__contact">
             <Icon name="clock" size={16} color="#FFFFFF" />
