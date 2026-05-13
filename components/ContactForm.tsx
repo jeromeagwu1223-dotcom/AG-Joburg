@@ -1,59 +1,31 @@
 'use client';
 
 import { useState } from 'react';
+import { useForm, ValidationError } from '@formspree/react';
 import Icon from './Icon';
 
-const FORMSPREE_ID = 'xgodqzog';
-
-interface FormState {
-  name: string;
-  phone: string;
-  email: string;
-  service: string;
-  address: string;
-  notes: string;
-}
-
 export default function ContactForm() {
-  const [form, setForm] = useState<FormState>({
-    name: '', phone: '', email: '', service: '', address: '', notes: '',
-  });
-  const [errors, setErrors] = useState<Partial<FormState>>({});
-  const [submitted, setSubmitted] = useState(false);
-  const [sending, setSending] = useState(false);
+  const [state, handleFormspreeSubmit] = useForm('xgodqzog');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [service, setService] = useState('');
+  const [address, setAddress] = useState('');
+  const [notes, setNotes] = useState('');
+  const [localErrors, setLocalErrors] = useState<{ name?: string; phone?: string; service?: string }>({});
 
-  const update = (k: keyof FormState) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => setForm({ ...form, [k]: e.target.value });
-
-  const submit = async (e: React.FormEvent) => {
+  const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const errs: Partial<FormState> = {};
-    if (!form.name.trim()) errs.name = 'Please tell us your name.';
-    if (!form.phone.trim()) errs.phone = 'We need a number to call you back on.';
-    if (!form.service) errs.service = 'Pick the closest service.';
-    setErrors(errs);
+    const errs: { name?: string; phone?: string; service?: string } = {};
+    if (!name.trim()) errs.name = 'Please tell us your name.';
+    if (!phone.trim()) errs.phone = 'We need a number to call you back on.';
+    if (!service) errs.service = 'Pick the closest service.';
+    setLocalErrors(errs);
     if (Object.keys(errs).length > 0) return;
-    setSending(true);
-    try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(form),
-      });
-      if (res.ok) {
-        setSubmitted(true);
-      } else {
-        setErrors({ notes: 'Something went wrong. Please call us directly on 060 332 5955.' });
-      }
-    } catch {
-      setErrors({ notes: 'Something went wrong. Please call us directly on 060 332 5955.' });
-    } finally {
-      setSending(false);
-    }
+    handleFormspreeSubmit(e);
   };
 
-  if (submitted) {
+  if (state.succeeded) {
     return (
       <section className="agk-section" id="quote">
         <div className="agk-container">
@@ -61,20 +33,11 @@ export default function ContactForm() {
             <div className="agk-form-success__icon">
               <Icon name="check" size={28} color="#FFFFFF" />
             </div>
-            <h3 className="agk-form-success__title">Got it, {form.name.split(' ')[0]}.</h3>
+            <h3 className="agk-form-success__title">Got it, {name.split(' ')[0]}.</h3>
             <p className="agk-form-success__body">
-              We&apos;ll call you on <strong>{form.phone}</strong> within the next four working
+              We&apos;ll call you on <strong>{phone}</strong> within the next four working
               hours to confirm details and book a free site visit if needed.
             </p>
-            <button
-              className="agk-btn agk-btn--secondary"
-              onClick={() => {
-                setSubmitted(false);
-                setForm({ name: '', phone: '', email: '', service: '', address: '', notes: '' });
-              }}
-            >
-              Send another
-            </button>
           </div>
         </div>
       </section>
@@ -103,44 +66,51 @@ export default function ContactForm() {
             <div className="agk-field">
               <label className="agk-field__label">Full name</label>
               <input
-                className={'agk-input' + (errors.name ? ' is-error' : '')}
-                value={form.name}
-                onChange={update('name')}
+                name="name"
+                className={'agk-input' + (localErrors.name ? ' is-error' : '')}
+                value={name}
+                onChange={e => setName(e.target.value)}
                 placeholder="Sipho Dlamini"
               />
-              {errors.name && <div className="agk-field__error">{errors.name}</div>}
+              {localErrors.name && <div className="agk-field__error">{localErrors.name}</div>}
+              <ValidationError field="name" errors={state.errors} className="agk-field__error" />
             </div>
 
             <div className="agk-field-row">
               <div className="agk-field">
                 <label className="agk-field__label">Phone</label>
                 <input
-                  className={'agk-input' + (errors.phone ? ' is-error' : '')}
-                  value={form.phone}
-                  onChange={update('phone')}
+                  name="phone"
+                  className={'agk-input' + (localErrors.phone ? ' is-error' : '')}
+                  value={phone}
+                  onChange={e => setPhone(e.target.value)}
                   placeholder="082 555 0123"
                 />
-                {errors.phone && <div className="agk-field__error">{errors.phone}</div>}
+                {localErrors.phone && <div className="agk-field__error">{localErrors.phone}</div>}
+                <ValidationError field="phone" errors={state.errors} className="agk-field__error" />
               </div>
               <div className="agk-field">
                 <label className="agk-field__label">
                   Email <span className="agk-field__opt">(optional)</span>
                 </label>
                 <input
+                  name="email"
                   className="agk-input"
-                  value={form.email}
-                  onChange={update('email')}
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
                   placeholder="you@example.co.za"
                 />
+                <ValidationError field="email" errors={state.errors} className="agk-field__error" />
               </div>
             </div>
 
             <div className="agk-field">
               <label className="agk-field__label">Service you need</label>
               <select
-                className={'agk-input' + (errors.service ? ' is-error' : '')}
-                value={form.service}
-                onChange={update('service')}
+                name="service"
+                className={'agk-input' + (localErrors.service ? ' is-error' : '')}
+                value={service}
+                onChange={e => setService(e.target.value)}
               >
                 <option value="">Pick the closest match…</option>
                 <option>Damp proofing &amp; waterproofing</option>
@@ -151,7 +121,7 @@ export default function ContactForm() {
                 <option>Home extension or alteration</option>
                 <option>Not sure — multiple issues</option>
               </select>
-              {errors.service && <div className="agk-field__error">{errors.service}</div>}
+              {localErrors.service && <div className="agk-field__error">{localErrors.service}</div>}
             </div>
 
             <div className="agk-field">
@@ -159,9 +129,10 @@ export default function ContactForm() {
                 Property address <span className="agk-field__opt">(suburb is fine)</span>
               </label>
               <input
+                name="address"
                 className="agk-input"
-                value={form.address}
-                onChange={update('address')}
+                value={address}
+                onChange={e => setAddress(e.target.value)}
                 placeholder="Parkhurst"
               />
             </div>
@@ -169,16 +140,23 @@ export default function ContactForm() {
             <div className="agk-field">
               <label className="agk-field__label">What&apos;s going on?</label>
               <textarea
+                name="notes"
                 className="agk-input agk-input--textarea"
-                value={form.notes}
-                onChange={update('notes')}
+                value={notes}
+                onChange={e => setNotes(e.target.value)}
                 placeholder="Leak above the bedroom every time it rains. Started last summer."
               />
             </div>
 
+            {state.errors && state.errors.getFormErrors().length > 0 && (
+              <div className="agk-field__error">
+                Something went wrong. Please call us directly on 060 332 5955.
+              </div>
+            )}
+
             <div className="agk-form__submit">
-              <button type="submit" className="agk-btn agk-btn--primary" disabled={sending}>
-                {sending ? 'Sending…' : 'Get my quote'}
+              <button type="submit" className="agk-btn agk-btn--primary" disabled={state.submitting}>
+                {state.submitting ? 'Sending…' : 'Get my quote'}
               </button>
               <span className="agk-form__note">
                 POPIA-compliant · we only use your details to send a quote.
