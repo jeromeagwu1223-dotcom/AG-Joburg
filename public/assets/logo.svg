@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 96" role="img" aria-label="AG Joburg — All Grounds Joburg">
+  <g>
+    <rect x="0" y="0" width="96" height="96" fill="#EF4D48"/>
+    <polygon points="0,72 48,48 96,72 96,96 0,96" fill="#2B161B"/>
+    <text x="48" y="56" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="700" font-size="40" fill="#FFFFFF" letter-spacing="-1">AG</text>
+  </g>
+  <g transform="translate(112, 0)">
+    <text x="0" y="46" font-family="Montserrat, sans-serif" font-weight="700" font-size="34" fill="#2B161B" letter-spacing="-0.5">JOBURG</text>
+    <text x="2" y="74" font-family="Open Sans, sans-serif" font-weight="500" font-size="12" fill="#54595F" letter-spacing="3">ALL GROUNDS · JHB</text>
+  </g>
+</svg>
