@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import Icon from './Icon';
 
+const FORMSPREE_ID = 'xgodqzog';
+
 interface FormState {
   name: string;
   phone: string;
@@ -18,19 +20,37 @@ export default function ContactForm() {
   });
   const [errors, setErrors] = useState<Partial<FormState>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
 
   const update = (k: keyof FormState) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => setForm({ ...form, [k]: e.target.value });
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errs: Partial<FormState> = {};
     if (!form.name.trim()) errs.name = 'Please tell us your name.';
     if (!form.phone.trim()) errs.phone = 'We need a number to call you back on.';
     if (!form.service) errs.service = 'Pick the closest service.';
     setErrors(errs);
-    if (Object.keys(errs).length === 0) setSubmitted(true);
+    if (Object.keys(errs).length > 0) return;
+    setSending(true);
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setErrors({ notes: 'Something went wrong. Please call us directly on 060 332 5955.' });
+      }
+    } catch {
+      setErrors({ notes: 'Something went wrong. Please call us directly on 060 332 5955.' });
+    } finally {
+      setSending(false);
+    }
   };
 
   if (submitted) {
@@ -72,9 +92,9 @@ export default function ContactForm() {
               Quick form, no spam. We respond within four working hours — usually quicker.
             </p>
             <ul className="agk-form-side__contacts">
-              <li><Icon name="phone" size={18} color="#EF4D48" /><span>011 555 0100</span></li>
-              <li><Icon name="mail" size={18} color="#EF4D48" /><span>quotes@agjoburg.co.za</span></li>
-              <li><Icon name="mapPin" size={18} color="#EF4D48" /><span>Greater Joburg · Sandton · Randburg · Roodepoort</span></li>
+              <li><Icon name="phone" size={18} color="#EF4D48" /><span>060 332 5955</span></li>
+              <li><Icon name="mail" size={18} color="#EF4D48" /><span>heyjeromeagwu@gmail.com</span></li>
+              <li><Icon name="mapPin" size={18} color="#EF4D48" /><span>95, 14th Ave, Northcliff · Joburg</span></li>
               <li><Icon name="clock" size={18} color="#EF4D48" /><span>Mon–Fri 07:00–17:00 · Sat 08:00–13:00</span></li>
             </ul>
           </div>
@@ -157,8 +177,8 @@ export default function ContactForm() {
             </div>
 
             <div className="agk-form__submit">
-              <button type="submit" className="agk-btn agk-btn--primary">
-                Get my quote
+              <button type="submit" className="agk-btn agk-btn--primary" disabled={sending}>
+                {sending ? 'Sending…' : 'Get my quote'}
               </button>
               <span className="agk-form__note">
                 POPIA-compliant · we only use your details to send a quote.

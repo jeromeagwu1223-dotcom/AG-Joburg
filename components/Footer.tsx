@@ -53,15 +53,15 @@ export default function Footer() {
           <div className="agk-footer__h">Reach us</div>
           <div className="agk-footer__contact">
             <Icon name="phone" size={16} color="#FFFFFF" />
-            <span>011 555 0100</span>
+            <span>060 332 5955</span>
           </div>
           <div className="agk-footer__contact">
             <Icon name="mail" size={16} color="#FFFFFF" />
-            <span>quotes@agjoburg.co.za</span>
+            <span>heyjeromeagwu@gmail.com</span>
           </div>
           <div className="agk-footer__contact">
             <Icon name="mapPin" size={16} color="#FFFFFF" />
-            <span>Greater Joburg</span>
+            <span>95, 14th Ave, Northcliff</span>
           </div>
           <div className="agk-footer__contact">
             <Icon name="clock" size={16} color="#FFFFFF" />
@@ -72,7 +72,7 @@ export default function Footer() {
 
       <div className="agk-footer__bottom">
         <div className="agk-container agk-footer__bottom-inner">
-          <div>&copy; {year} All Grounds Joburg (Pty) Ltd.</div>
+          <div>&copy; {year} AG Joburg. All rights reserved.</div>
           <div>One number. Every trade. All grounds covered.</div>
         </div>
       </div>

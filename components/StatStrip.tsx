@@ -1,7 +1,6 @@
 const STATS = [
-  { num: '12', accent: '+', label: 'years on the tools' },
   { num: '24', accent: 'h', label: 'quote turnaround' },
-  { num: '7',  accent: '',  label: 'trades, one number' },
+  { num: '6',  accent: '',  label: 'trades, one number' },
   { num: '100', accent: '%', label: 'workmanship warranty' },
 ];
 

@@ -40,9 +40,9 @@ export default function Header() {
         </nav>
 
         <div className="agk-header__cta">
-          <a className="agk-header__phone" href="tel:+27115550100">
+          <a className="agk-header__phone" href="tel:+27603325955">
             <Icon name="phone" size={16} />
-            <span>011 555 0100</span>
+            <span>060 332 5955</span>
           </a>
           <button className="agk-btn agk-btn--primary agk-btn--sm" onClick={openModal}>
             Get a free quote
