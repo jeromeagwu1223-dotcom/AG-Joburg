@@ -19,11 +19,11 @@ export default function Hero() {
           </h1>
           <p className="agk-hero__lede">
             Renovations, repairs, waterproofing, plumbing, electrical, tiling and damp
-            proofing — handled by one team. Free quotes within 24 hours across greater Joburg.
+            proofing — handled by one team. Quotes within 24 hours across greater Joburg.
           </p>
           <div className="agk-hero__cta">
             <button className="agk-btn agk-btn--primary" onClick={openModal}>
-              Get a free quote
+              Get a quote
             </button>
             <Link href="/services" className="agk-btn agk-btn--secondary">
               See our services

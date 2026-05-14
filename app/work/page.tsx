@@ -21,7 +21,7 @@ export default function WorkPage() {
         <div className="agk-placeholder-block">
           <p>Project photos and case studies coming soon.</p>
           <Link href="/contact" className="agk-btn agk-btn--primary">
-            Get a free quote
+            Get a quote
           </Link>
         </div>
       </div>

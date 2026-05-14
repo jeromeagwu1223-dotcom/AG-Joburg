@@ -19,7 +19,7 @@ export default function FeatureBand() {
           </p>
           <div className="agk-feature__cta">
             <button className="agk-btn agk-btn--light" onClick={openModal}>
-              Get a free quote
+              Get a quote
             </button>
             <Link href="/work" className="agk-btn agk-btn--ghost-light">
               See recent jobs <Icon name="arrowRight" size={16} />

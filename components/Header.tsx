@@ -45,7 +45,7 @@ export default function Header() {
             <span>060 332 5955</span>
           </a>
           <button className="agk-btn agk-btn--primary agk-btn--sm" onClick={openModal}>
-            Get a free quote
+            Get a quote
           </button>
         </div>
 

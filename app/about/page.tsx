@@ -24,7 +24,7 @@ export default function AboutPage() {
             One number. Every trade. All grounds covered.
           </p>
           <Link href="/contact" className="agk-btn agk-btn--primary">
-            Get a free quote
+            Get a quote
           </Link>
         </div>
       </div>
