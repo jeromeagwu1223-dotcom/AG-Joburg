@@ -56,7 +56,7 @@ export default function ContactForm() {
             </p>
             <ul className="agk-form-side__contacts">
               <li><Icon name="phone" size={18} color="#EF4D48" /><span>060 332 5955</span></li>
-              <li><Icon name="mail" size={18} color="#EF4D48" /><span>heyjeromeagwu@gmail.com</span></li>
+              <li><Icon name="mail" size={18} color="#EF4D48" /><span>agjoburgconstruction@gmail.com</span></li>
               <li><Icon name="mapPin" size={18} color="#EF4D48" /><span>97, 14th Ave, Northcliff · Joburg</span></li>
               <li><Icon name="clock" size={18} color="#EF4D48" /><span>Mon–Fri 07:00–17:00 · Sat 08:00–13:00</span></li>
             </ul>

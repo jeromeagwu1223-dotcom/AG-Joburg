@@ -57,7 +57,7 @@ export default function Footer() {
           </div>
           <div className="agk-footer__contact">
             <Icon name="mail" size={16} color="#FFFFFF" />
-            <span>heyjeromeagwu@gmail.com</span>
+            <span>agjoburgconstruction@gmail.com</span>
           </div>
           <div className="agk-footer__contact">
             <Icon name="mapPin" size={16} color="#FFFFFF" />
